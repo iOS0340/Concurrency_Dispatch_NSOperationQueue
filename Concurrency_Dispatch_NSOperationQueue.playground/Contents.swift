@@ -3,7 +3,7 @@
 import UIKit
 import PlaygroundSupport
 
-let global1 = DispatchQueue.global()
+/*let global1 = DispatchQueue.global()
 let global2 = DispatchQueue.global()
 let global3 = DispatchQueue.global()
 
@@ -22,8 +22,12 @@ print("Reference of Custom Queue 3: \(Unmanaged.passUnretained(customQueue3).toO
 print("Reference of Custom Queue 4: \(Unmanaged.passUnretained(customQueue4).toOpaque())")
 
 let global4 = DispatchQueue.global()
-print("Reference of Global 4 Queue: \(Unmanaged.passUnretained(global4).toOpaque())")
+print("Reference of Global 4 Queue: \(Unmanaged.passUnretained(global4).toOpaque())")*/
 
+/**
+ Below Code shows the total execution time of sync and async Queues.
+ when the queues are async then print statement execute immediately else it will wait for all the sync tasks to complete.
+ */
 
 let startTime = CFAbsoluteTimeGetCurrent()
 
@@ -40,6 +44,11 @@ global2.async {
 }
 
 print("Time Duration to Execute: \(CFAbsoluteTimeGetCurrent() - startTime)")*/
+
+/**
+    Below block of code shows Serial Queue execution.
+ */
+
 
 /*let queue = DispatchQueue(label: "SerialQueue")
 
@@ -145,6 +154,10 @@ concurrentQueue.async {
 }
 */
 
+/**
+ Below block of code demonstrate the Operation queue functionality with Block operation, Thread. There is a completion Block functionality which will called after all the tasks executed. We can cancel the operation anytime we want using Cancel method of Operation. We can limit the operation count for perticular OperationQueue by setting value of maxConcurrentOperationCount variable. We can add dependancy on operation so depent operation will not start untill all the previous operaion not complete. When we add waitUntilFinished: true then it will wait to this line untill all the operaitons are finished.
+ */
+
 /*let blockOperation = BlockOperation()
 blockOperation.completionBlock = {
     print("All Blocl Executed successfully")
@@ -207,24 +220,24 @@ obj.start()
 sleep(1)
 obj.cancel()*/
 
-/*let operationQueue = OperationQueue()
+let operationQueue = OperationQueue()
 
 let blockOpration = BlockOperation.init {
-    for i in 0 ..< 10000 {
+    for i in 0 ..< 100 {
         print("First Block of Code: \(i)")
         print("First Block is on Main Thread \(Thread.isMainThread)")
     }
 }
 
 let blockOpration1 = BlockOperation.init {
-    for i in 0 ..< 10000 {
+    for i in 0 ..< 100 {
         print("Second Block of Code: \(i)")
         print("Second Block is on Main Thread \(Thread.isMainThread)")
     }
     
 }
 
-
+blockOpration1.addDependency(blockOpration)
 operationQueue.maxConcurrentOperationCount = 2
 operationQueue.addOperations([blockOpration, blockOpration1], waitUntilFinished: true)
-print("Last Block of code Executed")*/
+print("Last Block of code Executed")
